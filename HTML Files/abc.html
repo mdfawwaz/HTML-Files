@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>In and Out Card Game</title>
+  <style>
+    /* Add your styling here */
+  </style>
+</head>
+<body>
+  <h1>In and Out Card Game</h1>
+    <!-- Player Sections -->
+    <form id="game-form">
+        <!-- Player 1 Section -->
+        <div>
+          <h2>Player 1</h2>
+          <label for="player1">Name:</label>
+          <input type="text" id="player1" name="player1" required>
+        </div>
+        <div>
+          <label for="bet1">Bet Amount:</label>
+          <input type="number" id="bet1" name="bet1" min="1" required>
+        </div>
+        <div>
+          <label for="choice1">Choice:</label>
+          <select id="choice1" name="choice1" required>
+            <option value="in">In</option>
+            <option value="out">Out</option>
+          </select>
+        </div>
+        
+  <!-- Card Creation Form -->
+  <form id="card-form">
+    <label for="suit">Select a Suit:</label>
+    <select id="suit" name="suit">
+      <option value="spade">Spade</option>
+      <option value="heart">Heart</option>
+      <option value="club">Club</option>
+      <option value="diamond">Diamond</option>
+    </select>
+    
+    <label for="rank">Select a Rank:</label>
+    <select id="rank" name="rank">
+      <option value="ace">Ace</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="jack">Jack</option>
+      <option value="queen">Queen</option>
+      <option value="king">King</option>
+    </select>
+    
+   <!---- <button type="button" onclick="createCard()">Create Card</button> -->
+  </form>
+  
+
+    <!-- Player 2 Section -->
+    <div>
+      <h2>Player 2</h2>
+      <label for="player2">Name:</label>
+      <input type="text" id="player2" name="player2" required>
+    </div>
+    <div>
+      <label for="bet2">Bet Amount:</label>
+      <input type="number" id="bet2" name="bet2" min="1" required>
+    </div>
+    <div>
+      <label for="choice2">Choice:</label>
+      <select id="choice2" name="choice2" required>
+        <option value="in">In</option>
+        <option value="out">Out</option>
+      </select>
+    </div>
+    <!-- Card Creation Form -->
+  <form id="card-form">
+    <label for="suit">Select a Suit:</label>
+    <select id="suit" name="suit">
+      <option value="spade">Spade</option>
+      <option value="heart">Heart</option>
+      <option value="club">Club</option>
+      <option value="diamond">Diamond</option>
+    </select>
+    
+    <label for="rank">Select a Rank:</label>
+    <select id="rank" name="rank">
+      <option value="ace">Ace</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="jack">Jack</option>
+      <option value="queen">Queen</option>
+      <option value="king">King</option>
+    </select>
+    
+    <!-- <button type="button" onclick="createCard()">Create Card</button>-->
+  </form>
+    <button type="button" onclick="playGame()">Play</button>
+  </form>
+  

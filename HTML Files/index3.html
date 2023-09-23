@@ -1,0 +1,395 @@
+[12:16 am] Ankem Revathi
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GAME-2584</title>
+
+<style>
+
+        body {
+
+            text-align: center;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 100vh;
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background-color: rgb(255, 214, 177);
+
+          }
+
+          .h1{
+
+            font-size: small;
+
+            font-family: 'Times New Roman', Times, serif;
+
+          }
+
+          .game-board {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 10px;
+
+            width: 400px;
+
+            height: 400px;
+
+            background-color: #eee;
+
+            border: 2px solid #333;
+
+            border-radius: 10px;
+
+            padding: 10px;
+
+          }
+
+          .game-container {
+
+            border: 10px solid #333;
+
+            background-color: #ccc;
+
+            padding: 10px;
+
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+            width: 300px;
+
+            margin: 0 auto;
+
+            padding: 10px;
+
+          }
+
+          .cell {
+
+            width: 65px;
+
+            height: 65px;
+
+            margin: 5px;
+
+            background-color: #eee;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 5px;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+         }
+
+ 
+
+        .tile-color-1 { background-color: rgb(238, 228, 218); }
+
+        .tile-color-2 { background-color: rgb(237, 224, 200); }
+
+        .tile-color-4 { background-color: rgb(242, 177, 121); }
+
+        .tile-color-8 { background-color: rgb(245, 149, 99); }
+
+        .tile-color-16 { background-color: rgb(246, 124, 95); }
+
+        .tile-color-32 { background-color: rgb(246, 94, 59); }
+
+ 
+
+        .tile {
+
+            width: 100px;
+
+            height: 100px;
+
+            display: inline-block;
+
+            margin: 5px;
+
+            text-align: center;
+
+            line-height: 100px;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            border-radius: 10px;       
+
+          }
+
+</style>
+
+</head>
+
+<body>
+
+<h1>2584 GAME</h1>
+
+ 
+
+<form action="GameServlet" method="post">
+
+ 
+
+<div class="game-container" name="game-container">
+
+    <div th:each="row, rowStat : ${gameContainer.board}"></div>
+
+    <div th:each="cell, colStat : ${row}" class="cell" id="cell-${rowStat.index}-${colStat.index}">
+
+    <div th:class="'tile tile-color-' + ${cell}">${cell != 0 ? cell : ''}</div>
+
+    </div>
+
+</div>
+
+<div class="tile tile-color-1" th:text="${cell00}" name="cell 0 0">1</div>
+
+<div class="tile tile-color-2" >2</div>
+
+<div class="tile tile-color-4">4</div>
+
+<div class="tile tile-color-8">8</div>
+
+<div class="tile tile-color-16">16</div>
+
+<div class="tile tile-color-32">32</div>
+
+<h1 th:text="${cell00}"></h1>    
+
+<!--  <%-->
+
+<!--  int[][] board = (int[][]) request.getAttribute("board");-->
+
+<!--  for (int row = 0; row < board.length; row++) {-->
+
+<!--      for (int col = 0; col < board[row].length; col++) {-->
+
+<!--          out.print("<div class='cell'>");-->
+
+<!--          out.print(board[row][col]);-->
+
+<!--          out.print("</div>");-->
+
+<!--      }-->
+
+<!--      out.println("<br>");-->
+
+<!--  }-->
+
+<!--  %>-->
+
+</div>
+
+<div class="controls">
+
+<button name="btn-up">Up</button>
+
+<button name="btn-down">Down</button>
+
+<button name="btn-left">Left</button>
+
+<button name="btn-right">Right</button>
+
+</div>
+
+<div class="scores">
+
+<p>Score: <span name="current-score">0</span></p>
+
+<p>Highest Score: <span name="highest-score">0</span></p>
+
+</div>
+
+</form>
+
+<script>
+
+        const size = 4;
+
+        let board = new Array(size).fill(0).map(() => new Array(size).fill(0));
+
+        function initializeGame() {
+
+          const gameContainer = document.getElementById('game-container');
+
+          for (let row = 0; row < size; row++) {
+
+            for (let col = 0; col < size; col++) {
+
+          const cell = document.createElement('div');
+
+          cell.className = 'cell';
+
+          cell.id = `cell ${row} ${col}`;
+
+          cell.name= `cell ${row} ${col}`;
+
+          gameContainer.appendChild(cell);
+
+        }
+
+      }
+
+      updateBoard();
+
+    }
+
+    function updateBoard() {
+
+      for (let row = 0; row < size; row++) {
+
+        for (let col = 0; col < size; col++) {
+
+          const cell = document.getElementById(`cell-${row}-${col}`);
+
+          cell.textContent = board[row][col] !== 0 ? board[row][col] : '';
+
+        }
+
+      }
+
+    }
+
+  // Initialize the game
+
+    initializeGame();
+
+ 
+
+ 
+
+        // Add event listeners to the buttons
+
+        const btnUp = document.getElementById('btn-up');
+
+        const btnDown = document.getElementById('btn-down');
+
+        const btnLeft = document.getElementById('btn-left');
+
+        const btnRight = document.getElementById('btn-right');
+
+        btnUp.addEventListener('click', () => {
+
+            // Handle the "Up" button click event
+
+            console.log('Up button clicked');
+
+        });
+
+        btnDown.addEventListener('click', () => {
+
+            // Handle the "Down" button click event
+
+            console.log('Down button clicked');
+
+        });
+
+ 
+
+        btnLeft.addEventListener('click', () => {
+
+            // Handle the "Left" button click event
+
+            console.log('Left button clicked');
+
+        });
+
+        btnRight.addEventListener('click', () => {
+
+            // Handle the "Right" button click event
+
+            console.log('Right button clicked');
+
+        });
+
+         // Update the game score and highest score
+
+        let currentScore = 0;
+
+        let highestScore = 0;
+
+        function updateScores() {
+
+            const currentScoreElement = document.getElementById('current-score');
+
+            const highestScoreElement = document.getElementById('highest-score');
+
+            currentScoreElement.textContent = currentScore;
+
+            highestScoreElement.textContent = highestScore;
+
+        }
+
+        // Example: Update the scores when a new score is earned
+
+        currentScore = 100;
+
+        highestScore = 200;
+
+        updateScores();
+
+   </script> 
+
+</body>
+
+</html>
+
+
+
+<script>
+    // Your JavaScript code
+    const size = 4;
+    let board = new Array(size).fill(0).map(() => new Array(size).fill(0));
+
+    function initializeGame() {
+      const gameContainer = document.querySelector('.game-container');
+
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.id = `cell-${row}-${col}`;
+          gameContainer.appendChild(cell);
+        }
+      }
+
+      updateBoard();
+    }
+
+    function updateBoard() {
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+          const cell = document.getElementById(`cell-${row}-${col}`);
+          cell.textContent = board[row][col] !== 0 ? board[row][col] : '';
+        }
+      }
+    }
+
+    // Initialize the game
+    initializeGame();

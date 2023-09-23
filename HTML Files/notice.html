@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Board</title>
+</head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      border-radius: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <h1>User Input Table</h1>
+      
+      <form id="userInputForm">
+        <label for="title">Title:</label><br />
+        <input type="text" id="title" name="title" required><br><br>
+        
+        <label for="content">Content:</label><br />
+        <textarea id="content" name="content" required></textarea><br><br>
+        
+        <label for="contactName">Contact Name:</label><br />
+        <input type="text" id="contactName" name="contactName" required><br><br>
+  
+        <label for="contactPhone">Contact Phone:</label><br />
+        <input type="text" id="contactPhone" name="contactPhone" required><br><br>
+        
+        <input type="submit" value="Submit">
+      </form>
+      
+      <h2>Notice Data in form of Tables</h2>
+      <table id="dataTable">
+        <tr>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Contact Name</th>
+          <th>Contact Phone</th>
+        </tr>
+      </table>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('userInputForm');
+        const dataTable = document.getElementById('dataTable');
+        
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const title = form.title.value;
+          const content = form.content.value;
+          const contactName = form.contactName.value;
+          const contactPhone = form.contactPhone.value;
+          
+          const newRow = dataTable.insertRow();
+          const cell1 = newRow.insertCell(0);
+          const cell2 = newRow.insertCell(1);
+          const cell3 = newRow.insertCell(2);
+          const cell4 = newRow.insertCell(3);
+  
+          cell1.textContent = title;
+          cell2.textContent = content;
+          cell3.textContent = contactName;
+          cell4.textContent = contactPhone;
+          
+          form.reset();
+        });
+      });
+    </script>
+  </body>
+</html>
